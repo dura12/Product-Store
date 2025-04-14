@@ -46,3 +46,30 @@ MONGO_URI=your_mongo_uri
 PORT=5000
 ```
 
+1. Clone the repo
+   
+```
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+```
+2. Install dependencies
+```
+npm install
+```
+3. Build the frontend
+```
+npm run build
+```
+4. Start the server
+```
+npm run dev
+```
+Your app should be running at http://localhost:5000 🎉
+
+🛠️ Troubleshooting
+Make sure your MongoDB server is running and accessible
+
+Check that your .env file is correctly set up
+
+Run npm install in both client and server directories if necessary
+
