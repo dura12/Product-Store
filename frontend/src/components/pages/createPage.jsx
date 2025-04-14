@@ -1,4 +1,4 @@
-import { Box, Button, Container, Heading, Text, VStack  ,useColorModeValue} from "@chakra-ui/react"
+import { Box, Button, Container, Heading, Text, VStack  ,useColorModeValue, useToast} from "@chakra-ui/react"
 import React, { use } from "react"
 import FancyText from '@carefully-coded/react-text-gradient'; 
 import { useState } from "react";
@@ -7,33 +7,59 @@ const CreatePage = () => {
     const [product, setProduct] = useState(
         {
             name: "",
-            price: 0,
+            price: "",
             image: "",
         }
     )
   const {createProduct} = useProductStore()
+  const toast = useToast()
   const handleOnSubmit = async () => {
     try {
       const { success, message } = await createProduct(product); // Await the asynchronous function
       console.log(success, message);
-      if (success) {
+  
+      if (!success) {
+        toast({
+          title: "Error",
+          description: message, // Use "description" instead of "message" for Chakra UI toasts
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: message, // Use "description" instead of "message" for Chakra UI toasts
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+  
+        // Reset the product form
         setProduct({
           name: "",
-          price: 0,
+          price: "",
           image: "",
         });
       }
-      alert(message);
     } catch (error) {
       console.error("Error creating product:", error);
-      alert("An error occurred while creating the product.");
+      toast({
+        title: "Error",
+        description: "An error occurred while creating the product.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
   return (
-    <Container maxW={'container.sm'}>
+    <Container maxW={'container.md'} 
+    
+    > 
         <VStack spacing={8}>
-            <Heading as={"h1"} textAlign={'center'} mb={8}>Add New Product</Heading>
+            <Heading as={"h1"} textAlign={'center'} mt={8}>Add New Product</Heading>
             <Box
                 borderWidth={1}
                 borderRadius="lg"
@@ -58,6 +84,8 @@ const CreatePage = () => {
       border: '1px solid #CBD5E0',
       fontSize: '1rem',
       outline: 'none',
+      width: '100%',
+      boxSizing: 'border-box',
     }}
   />
 
@@ -74,6 +102,8 @@ const CreatePage = () => {
       border: '1px solid #CBD5E0',
       fontSize: '1rem',
       outline: 'none',
+      width: '100%',
+      boxSizing: 'border-box',
     }}
   />
 
@@ -90,6 +120,8 @@ const CreatePage = () => {
       border: '1px solid #CBD5E0',
       fontSize: '1rem',
       outline: 'none',
+      width: '100%',
+      boxSizing: 'border-box',
     }}
   />
 
